@@ -9,3 +9,9 @@
   background: black;
   color: white;
 }
+
+.color-card-buttons {
+  display: flex;
+  flex-direction: row;
+  gap: 0.5rem;
+}

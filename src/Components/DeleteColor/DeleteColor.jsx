@@ -1,29 +1,48 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
-export function DeleteColor({ color, onDeleteColor }) {
-  const [showConfirmation, setShowConfirmation] = useState(false);
+export function DeleteColor({
+  color,
+  onDeleteColor,
+  onDeleteStart,
+  onDeleteEnd,
+  initialDeleteMode,
+}) {
+  const [isConfirming, setIsConfirming] = useState(initialDeleteMode || false);
 
-  // if the user clicks the delete button, show the confirmation message "Really delete?"
-  function handleDeleteClick() {
-    setShowConfirmation(true);
+  /*
+  Sync internal state with prop: Ensures component reacts if 'initialDeleteMode' changes after mount.
+  Primarily for robustness/reusability, as useState handles the initial mount case here.
+  */
+  useEffect(() => {
+    if (initialDeleteMode !== undefined) {
+      setIsConfirming(initialDeleteMode);
+    }
+  }, [initialDeleteMode]);
+
+  function handleStartDelete() {
+    setIsConfirming(true);
+    if (onDeleteStart) onDeleteStart(); // Set the isDeleting state to true
+    // This is used to show the confirmation dialog
   }
 
-  // if the user clicks the delete button, call the onDeleteColor function and pass the color id to it
-  function handleConfirmDelete() {
-    onDeleteColor(color.id);
-    setShowConfirmation(false);
-  }
-
-  // if the user clicks the cancel button, hide the confirmation message
   function handleCancelDelete() {
-    setShowConfirmation(false);
+    setIsConfirming(false);
+    if (onDeleteEnd) onDeleteEnd(); // Set the isDeleting state to false
+    // This is used to hide the confirmation dialog
+  }
+
+  function handleConfirmDelete() {
+    onDeleteColor(color.id); // Call the onDeleteColor function passed from the parent component
+    setIsConfirming(false);
+    if (onDeleteEnd) onDeleteEnd(); // Set the isDeleting state to false
+    // This is used to hide the confirmation dialog
   }
 
   return (
     <>
       {/* Conditional rendering for confirmation dialog */}
-      {!showConfirmation ? (
-        <button onClick={handleDeleteClick}>DELETE</button>
+      {!isConfirming ? (
+        <button onClick={handleStartDelete}>DELETE</button>
       ) : (
         <div>
           <p className="color-card-headline">Really delete?</p>

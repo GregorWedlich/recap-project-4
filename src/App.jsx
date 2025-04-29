@@ -19,6 +19,17 @@ function App() {
     setColors(newColors);
   }
 
+  function handleEditColor(id, newColor) {
+    // map over the colors array and update the color with the given id
+    const newColors = colors.map((color) => {
+      if (color.id === id) {
+        return { ...color, ...newColor };
+      }
+      return color;
+    });
+    setColors(newColors);
+  }
+
   return (
     <>
       <h1>Theme Creator</h1>
@@ -30,6 +41,7 @@ function App() {
             key={color.id}
             color={color}
             onDeleteColor={handleDeleteColor}
+            onEditColor={handleEditColor}
           />
         );
       })}
