@@ -1,4 +1,4 @@
-import { useState } from "react";
+import useLocalStorageState from "use-local-storage-state";
 import { initialColors } from "./lib/colors";
 import { ColorForm } from "./Components/ColorForm/ColorForm";
 import Color from "./Components/Color/Color";
@@ -6,7 +6,9 @@ import "./App.css";
 
 function App() {
   // Initial state of colors
-  const [colors, setColors] = useState(initialColors);
+  const [colors, setColors] = useLocalStorageState("colors", {
+    defaultValue: initialColors,
+  });
 
   // combine the newcolors with the intialcolors, This function is called in the ColorForm component and gets the new color
   function handleAddColor(newColor) {
