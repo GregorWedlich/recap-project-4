@@ -2,6 +2,7 @@ import { useState } from "react";
 import "./Color.css";
 import { DeleteColor } from "../DeleteColor/DeleteColor";
 import { EditColor } from "../EditColor/EditColor";
+import { CopyToClipboard } from "../CopyToClipboard/CopyToClipboard";
 
 export default function Color({ color, onDeleteColor, onEditColor }) {
   // State to manage editing and deleting modes
@@ -17,6 +18,7 @@ export default function Color({ color, onDeleteColor, onEditColor }) {
       }}
     >
       <h3 className="color-card-headline">{color.hex}</h3>
+      <CopyToClipboard text={color.hex} />
       <h4>{color.role}</h4>
       <p>contrast: {color.contrastText}</p>
 
@@ -28,13 +30,11 @@ export default function Color({ color, onDeleteColor, onEditColor }) {
               color={color}
               onDeleteColor={onDeleteColor}
               onDeleteStart={() => setIsDeleting(true)}
-              onDeleteEnd={() => setIsDeleting(false)}
             />
             <EditColor
               color={color}
               onEditColor={onEditColor}
               onEditStart={() => setIsEditing(true)}
-              onEditEnd={() => setIsEditing(false)}
             />
           </>
         )}
@@ -44,7 +44,6 @@ export default function Color({ color, onDeleteColor, onEditColor }) {
           <EditColor
             color={color}
             onEditColor={onEditColor}
-            onEditStart={() => setIsEditing(true)}
             onEditEnd={() => setIsEditing(false)}
             initialEditMode={true}
           />
@@ -55,7 +54,6 @@ export default function Color({ color, onDeleteColor, onEditColor }) {
           <DeleteColor
             color={color}
             onDeleteColor={onDeleteColor}
-            onDeleteStart={() => setIsDeleting(true)}
             onDeleteEnd={() => setIsDeleting(false)}
             initialDeleteMode={true}
           />
