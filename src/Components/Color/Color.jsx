@@ -30,13 +30,11 @@ export default function Color({ color, onDeleteColor, onEditColor }) {
               color={color}
               onDeleteColor={onDeleteColor}
               onDeleteStart={() => setIsDeleting(true)}
-              onDeleteEnd={() => setIsDeleting(false)}
             />
             <EditColor
               color={color}
               onEditColor={onEditColor}
               onEditStart={() => setIsEditing(true)}
-              onEditEnd={() => setIsEditing(false)}
             />
           </>
         )}
@@ -46,7 +44,6 @@ export default function Color({ color, onDeleteColor, onEditColor }) {
           <EditColor
             color={color}
             onEditColor={onEditColor}
-            onEditStart={() => setIsEditing(true)}
             onEditEnd={() => setIsEditing(false)}
             initialEditMode={true}
           />
@@ -57,7 +54,6 @@ export default function Color({ color, onDeleteColor, onEditColor }) {
           <DeleteColor
             color={color}
             onDeleteColor={onDeleteColor}
-            onDeleteStart={() => setIsDeleting(true)}
             onDeleteEnd={() => setIsDeleting(false)}
             initialDeleteMode={true}
           />
